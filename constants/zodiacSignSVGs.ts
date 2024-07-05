@@ -1,0 +1,15 @@
+export const zodiacSignSVGs: { [key: string]: any } = {
+  cap: require("../assets/capricorn.svg"),
+  leo: require("../assets/leo.svg"),
+  can: require("../assets/cancer.svg"),
+  vir: require("../assets/virgo.svg"),
+  gem: require("../assets/gemini.svg"),
+  ari: require("../assets/aries.svg"),
+  lib: require("../assets/libra.svg"),
+  pis: require("../assets/pisces.svg"),
+  tau: require("../assets/taurus.svg"),
+  sag: require("../assets/sagittarius.svg"),
+  esc: require("../assets/scorpio.svg"),
+  acu: require("../assets/aquarius.svg"),
+  logotipo: require("../assets/logotipo.svg"),
+};

@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { StatusBar, View, StyleSheet } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ImmersiveMode from "react-native-immersive-mode";
 import CustomSplashScreen from "./components/CustomSplashScreen";
-import BottomNavigation from "./components/BottomNavigation";
-import HomeBackground from "./components/HomeBackground";
-import HeaderGlobal from "./components/HeaderGlobal";
+
+import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import AppNavigator from "./navigation/AppNavigation";
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -35,27 +36,21 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="light" />
-        <View style={styles.container}>
-          <HeaderGlobal />
-          <View style={styles.contentContainer}>
-            <HomeBackground />
-            <BottomNavigation />
-          </View>
-        </View>
-      </GestureHandlerRootView>
-    </SafeAreaProvider>
+    <AuthProvider>
+      <SafeAreaProvider>
+        <ThemeProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <StatusBar barStyle="light-content" />
+            <AppNavigator />
+          </GestureHandlerRootView>
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </AuthProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-
-  contentContainer: {
     flex: 1,
   },
 });

@@ -10,9 +10,13 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface ProfileButtonProps {
   iconColor: string;
+  setShowProfile: (value: boolean) => void; // Agregar el prop para controlar la visibilidad del perfil
 }
 
-const ProfileButton: React.FC<ProfileButtonProps> = ({ iconColor }) => {
+const ProfileButton: React.FC<ProfileButtonProps> = ({
+  iconColor,
+  setShowProfile,
+}) => {
   const radius = 80 / 2;
   const smallerRadius = radius - 5; // Radio del círculo más pequeño
 
@@ -37,6 +41,10 @@ const ProfileButton: React.FC<ProfileButtonProps> = ({ iconColor }) => {
     setPressed(false); // Establecer estado de presión a falso
   };
 
+  const handlePress = () => {
+    setShowProfile(true); // Mostrar la página de perfil
+  };
+
   // Coordenadas base y desplazamiento para el efecto hover
   const baseX = 50;
   const baseY = 50;
@@ -50,6 +58,7 @@ const ProfileButton: React.FC<ProfileButtonProps> = ({ iconColor }) => {
     <TouchableWithoutFeedback
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
+      onPress={handlePress} // Agregar el evento onPress para manejar el clic
     >
       <Animated.View
         style={[

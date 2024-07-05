@@ -3,7 +3,11 @@ import ProfileButton from "./ProfileButton";
 import { StyleSheet, View, Text } from "react-native";
 import { Canvas, ImageSVG, useSVG } from "@shopify/react-native-skia";
 
-const HeaderGlobal = () => {
+interface HeaderGlobalProps {
+  setShowProfile: (value: boolean) => void;
+}
+
+const HeaderGlobal: React.FC<HeaderGlobalProps> = ({ setShowProfile }) => {
   const svg = useSVG(require("../assets/logotipo.svg"));
 
   return (
@@ -15,7 +19,10 @@ const HeaderGlobal = () => {
         <Text style={styles.text}>Astro Predictions</Text>
       </View>
       <View style={styles.profileButtonContainer}>
-        <ProfileButton iconColor={"rgba(255,255,255,0.4)"} />
+        <ProfileButton
+          iconColor={"rgba(255,255,255,0.4)"}
+          setShowProfile={setShowProfile}
+        />
       </View>
     </View>
   );

@@ -1,13 +1,26 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Canvas, Circle, Line, Shadow } from "@shopify/react-native-skia";
+import {
+  Canvas,
+  Circle,
+  ImageSVG,
+  useSVG,
+  Shadow,
+} from "@shopify/react-native-skia";
+
 import useApplicationDimensions from "../hooks/useApplicationDimensions";
+import { useAuth } from "../context/AuthContext";
+import { zodiacSignSVGs } from "../constants/zodiacSignSVGs";
 
 export default function FloatingCenterButton() {
+  const { user } = useAuth();
   const dimensions = useApplicationDimensions();
   const { width } = dimensions;
   const circleDiameter = 70;
   const circleRadius = circleDiameter / 2;
+
+  const zodiacSignCode = user?.zodiacSignCode || "logotipo";
+  const svg = useSVG(zodiacSignSVGs[zodiacSignCode]);
 
   return (
     <View style={styles.container}>
@@ -27,20 +40,15 @@ export default function FloatingCenterButton() {
               color={"rgba(171, 168, 168, 0.4)"}
             />
           </Circle>
-          <Line
-            strokeCap={"round"}
-            p1={{ x: circleRadius - 15, y: circleRadius }}
-            p2={{ x: circleRadius + 15, y: circleRadius }}
-            color="white"
-            strokeWidth={4}
-          />
-          <Line
-            strokeCap={"round"}
-            p1={{ x: circleRadius, y: circleRadius - 15 }}
-            p2={{ x: circleRadius, y: circleRadius + 15 }}
-            color="white"
-            strokeWidth={4}
-          />
+          {svg && (
+            <ImageSVG
+              svg={svg}
+              x={(circleDiameter - 60) / 2} // Center the SVG horizontally
+              y={(circleDiameter - 70) / 2} // Center the SVG vertically
+              width={60}
+              height={60}
+            />
+          )}
         </Canvas>
       </View>
     </View>

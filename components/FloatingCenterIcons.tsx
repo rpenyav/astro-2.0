@@ -10,11 +10,13 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 interface FloatingCenterIconsProps {
   icon: any;
   iconColor: string;
+  onPress?: () => void; // Añadir onPress como prop opcional
 }
 
 const FloatingCenterIcons: React.FC<FloatingCenterIconsProps> = ({
   icon = "earth",
   iconColor,
+  onPress,
 }) => {
   const [scaleAnim] = useState(new Animated.Value(1));
   const [pressed, setPressed] = useState(false); // Estado para manejar la presión
@@ -35,6 +37,9 @@ const FloatingCenterIcons: React.FC<FloatingCenterIconsProps> = ({
       useNativeDriver: true,
     }).start();
     setPressed(false); // Establecer estado de presión a falso
+    if (onPress) {
+      onPress(); // Llamar a onPress si está definido
+    }
   };
 
   return (

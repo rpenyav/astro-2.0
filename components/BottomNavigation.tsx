@@ -5,11 +5,38 @@ import useApplicationDimensions from "../hooks/useApplicationDimensions";
 import FloatingCenterIcons from "./FloatingCenterIcons";
 import FloatingCenterButton from "./FloatingCenterButton";
 
-const BottomNavigation = () => {
+interface BottomNavigationProps {
+  setShowPredictions: (value: boolean) => void;
+  setShowCompatibility: (value: boolean) => void;
+  setShowAstralChart: (value: boolean) => void;
+  setShowArticles: (value: boolean) => void;
+  setShowProfile: (value: boolean) => void;
+}
+
+const BottomNavigation: React.FC<BottomNavigationProps> = ({
+  setShowPredictions,
+  setShowCompatibility,
+  setShowAstralChart,
+  setShowArticles,
+  setShowProfile,
+}) => {
   const dimensions = useApplicationDimensions();
   const { width } = dimensions;
   const bottomNavHeight = 120; // Altura de la barra de navegación
   const topMargin = 20; // Margen superior para el Path
+
+  const closeAllPages = () => {
+    setShowPredictions(false);
+    setShowCompatibility(false);
+    setShowAstralChart(false);
+    setShowArticles(false);
+    setShowProfile(false);
+  };
+
+  const handlePress = (openPage: () => void) => {
+    closeAllPages();
+    openPage();
+  };
 
   const path = Skia.Path.Make();
   path.moveTo(0, 30); // No cambiar este punto, es el inicio del path
@@ -49,18 +76,22 @@ const BottomNavigation = () => {
         <FloatingCenterIcons
           icon="planet"
           iconColor={"rgba(255,255,255,0.4)"}
+          onPress={() => handlePress(() => setShowPredictions(true))}
         />
         <FloatingCenterIcons
           icon="people-sharp"
           iconColor={"rgba(255,255,255,0.4)"}
+          onPress={() => handlePress(() => setShowCompatibility(true))}
         />
         <FloatingCenterIcons
           icon="pie-chart"
           iconColor={"rgba(255,255,255,0.4)"}
+          onPress={() => handlePress(() => setShowAstralChart(true))}
         />
         <FloatingCenterIcons
           icon="reader"
           iconColor={"rgba(255,255,255,0.4)"}
+          onPress={() => handlePress(() => setShowArticles(true))}
         />
       </View>
       <FloatingCenterButton />
@@ -73,6 +104,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
+    zIndex: 3, // Asegurar que BottomNavigation tenga el zIndex mayor
   },
   iconsContainer: {
     flexDirection: "row",
