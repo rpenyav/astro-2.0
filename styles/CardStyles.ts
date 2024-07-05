@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle, TextStyle } from "react-native";
+import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from "react-native";
 import { useTheme } from "../context/ThemeContext";
 import { lightTheme } from "../themes/themes";
 
